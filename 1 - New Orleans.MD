@@ -3,7 +3,7 @@
 New Orleans is the first challenge after the tutorial.
 It is revision 01 of the lock with no hardware security module attached.
 
-![Main disassembly](Images/NO-1-main.png)
+![Main disassembly](Images/NewOrleans/NO-1-main.png)
 
 The first thing I like to look at is the disassembly of main. Just to get a feel for what this program might want to do when it's run.
 Without reading the assembly and just skimming over the plaintext strings and function names we can already get a decent idea of what this program does.
