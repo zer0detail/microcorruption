@@ -4,7 +4,7 @@ Cusco is the 4th Microcorruption challenge and I am presented with change notes 
 flag have now been fixed. The lock is once again attached to the HSM-1, meaning the password and its confirmation logic are not in memory.
 
 
-![changes])(Images/Cusco/CUS-changes.png)
+![changes](Images/Cusco/CUS-changes.png)
 
 First things first, how does the program look?
 
@@ -80,4 +80,4 @@ Since the address is 0x4446 and both 0x44 and 0x46 are both valid ascii characte
 
 Success.
 
-![success](Images/Cusco/success.png)
+![success](Images/Cusco/CUS-success.png)
