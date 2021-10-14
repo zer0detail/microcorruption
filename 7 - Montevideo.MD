@@ -19,7 +19,7 @@ Before anything, I just want to test and see if this has fixed the buffer overfl
 
 entering a long password and then continuing on to a breakpoint set at the "ret" for the login function and then stepping once I can see that PC is still overwritten with 4141
 
-![overflow](Images/Montevideo/attempt.png)
+![overflow](Images/Montevideo/overflow.png)
 
 Actually, the overwritten return address is still at exactly the same offset.
 The interrupt call I jumped to in the last exercise to call my own  interrupt is also still at the same offset...
