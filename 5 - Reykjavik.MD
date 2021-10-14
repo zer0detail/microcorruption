@@ -34,7 +34,7 @@ Since the program then calls that memory address, its fair to assume this is ass
 Funnily enough, microcorruption comes with an assembler.
 So I can take a paste of that memory dump..
 
-![copy](Images/Reykjavik/copy.png)
+![copy](Images/Reykjavik/REY-copy.png)
 
 and do some super duper basic cleanup with notepad++ (I'm sure there's a cooler easier way but oh well)
 
@@ -52,7 +52,7 @@ and remove the ending ascii display from each line..
 
 Placing the result into the assembler and clicking disassemble gives what appears to be valid instructions
 
-![decoded instructions](Images/Reykjavik/newinstructions.png)
+![decoded instructions](Images/Reykjavik/REY-newinstructions.png)
 
 Alright, so now that it's executing the decrypted instructions at 0x2400 and not from programs .text section, I can't see the disassembly in the debugger screen anymore.
 so  it's time to skim over the assembly and see if I can find some patterns or anything that jumps out.
