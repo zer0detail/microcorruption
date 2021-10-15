@@ -3,7 +3,7 @@
 Santa Cruz is the 9th challenge in the microcorruption series.
 This challenge actually appears to have alot of changes compared to what all of the other challenges looked like.
 
-![changes](Images/SantaCruz/Changes.png)
+![changes](Images/SantaCruz/changes.png)
 
 The change log doesnt reveal much, just that there is an update that further rejects long passwords and the lock is still attached to the HSM-1.
 
@@ -14,7 +14,7 @@ However, the code itself has changed quite a bit.
 Main still just calls login, buuut
 
 
-![login](Images/SantaCruz/login.png)
+![login](Images/SantaCruz/login1.png)
 
 login() is now super long and contains extra thing like for the first time ever a username is required with the password.
 
@@ -23,7 +23,7 @@ So i'll run the program, enter an arbitrary username and password and start step
 
 I'm going to start by breaking at 0x45d2. The specific address is mostly arbitrary, but it comes after all of the puts/getsn/strcopy functions that I assume are the boring retrieval of the username and password from the user and is just before the first test+jump conditional logic in the function.
 
-![loginbp](Images/SantaCruz/login.png)
+![loginbp](Images/SantaCruz/loginbp.png)
 
 I'll enter a username of 16 A's and a passwords of 16 B's to help differentiate them in memory
 
