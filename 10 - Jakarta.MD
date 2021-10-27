@@ -182,11 +182,11 @@ When you look at that number as a whole, it is obviously larger than 0x21.
 But the comparison doesnt check the whole register! it checks one byte!
 And the last byte of our number is x1f (31 decimal), which is smaller than 0x21 and therefore passes the check!
 
-![cmp vuln](Images/Jakarta/3thirdvuln.png)
+![cmp vuln](Images/Jakarta/thirdvuln.png)
 
 breaking at the return at the end of the login() function then stepping once gives me the glorious overwrite of the PC register.
 
-![overflow](Images/Jakarata/overflow.png)
+![overflow](Images/Jakarta/overflow.png)
 
 After which its a simple redirect to the unlock_door() function like usual with the hsm-1 and that is a solve.
 
