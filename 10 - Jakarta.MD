@@ -29,7 +29,8 @@ Preventing the buffer overflow in the previous challenge.
 
 ![retadd](Images/Jakarta/retadd.png)
 
-this new control stumped me for quite a while so I spent some time stepping through the login function to verify it was doing what I expected.
+this new control stumped me so I spent some time stepping through the login function to verify it was doing what I expected.
+Here is my commented outline of what login() is doing.
 
 ```assembly
 4560: push	r11
@@ -65,7 +66,7 @@ this new control stumped me for quite a while so I spent some time stepping thro
 45a8: mov	sp, r15
 45aa: call	#0x46f4 <strcpy>
 
-; end program if username length is > 0x21 characters long
+; end program if username length is >= 0x21 characters long
 ; otherwise jump to 45c0 
 45ae: cmp.b	#0x21, r11
 45b2: jnc	#0x45c0 <login+0x60>
@@ -100,7 +101,7 @@ this new control stumped me for quite a while so I spent some time stepping thro
 45fa: sub	#0x2402, r15
 ; add password length to username length 
 45fe: add	r11, r15
-; check if total length is > 0x21 and exit if it is 
+; check if total length is >= 0x21 and exit if it is 
 4600: cmp.b	#0x21, r15
 4604: jnc	#0x4612 <login+0xb2>
 4606: mov	&0x2400, r15
@@ -126,6 +127,10 @@ this new control stumped me for quite a while so I spent some time stepping thro
 4634: ret
 
 ```
+
+Stepping through that function, as well as the strcpy and HSM-1 interrupt functions did not make anything immediately pop out as vulnerable to me though.
+
+
 
 
 
