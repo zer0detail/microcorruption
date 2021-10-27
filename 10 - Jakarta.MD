@@ -131,6 +131,63 @@ Here is my commented outline of what login() is doing.
 Stepping through that function, as well as the strcpy and HSM-1 interrupt functions did not make anything immediately pop out as vulnerable to me though.
 
 
+Ok i've looked at this for along time and got nowhere so i'll start document the flaws I have found. Maybe it will click with me along the way.
 
 
+## The username field accepts to many characters
 
+![username](Images/Jakarta/username.png)
+
+getsn takes two arguments, the length of the string and the memory address to store it.
+The username getsn length should likely be something like 0x1f (decimal 31) to comply with the 32 length limit.
+However, the supplied length is 0xff (decimal 255), allowing up to 255 characters to be entered.
+This will overflow the stack and corrupt the return address, however the immediate check of the username length after the strcpy prevents a username longer than 32 characters from working.
+
+## The password length can be manipulated by the username field
+
+The password getsn() argument uses the correct 0x1f length instead of 0xff that the username field used.
+However! there is a teenie math error that lets the password length be expanded alot.
+The username allows 32 characters to successfully be entered, and the password length is calculated like this 31 - len(username).
+
+This usually works, for example, a 6 character password would be 31 - 6 which would leave 25 characters for the password.
+This would prevent more than 25 characters in the password field from being input and prevent overflows.
+
+However a username that uses all 32 characters leads to this logic 31 - 32.
+This causes an underflow  and sets the password length to 0xffff
+
+This can be seen in the following examples. Here I have entered a 32 character username, the length of which is stored in r11 (0x20 == decimal 32)
+0x1f (31) is moved into r14 and then the two are subtracted.
+![before sub](Images/Jakarta/beforesub.png)
+
+
+After the subtraction (32 - 31), the r14 register underflows to 0xffff, giving a password length of 65,535
+![after sub](Images/Jakarta/aftersub.png)
+
+this is slightly dampened by the proceeding logical AND, which reduces the valid length down to 0x1FF (or 511 decimal)
+
+![after and](Images/Jakarta/afterand.png)
+
+Unfortunately, immediately after I enter an overly long password with this trick (that does overwrite the return address), the combined password + username length check is conducted and I fail it.
+
+-------------------
+
+Actually! it doesn't need to fail!
+
+There is a third flaw that will bypass the username + password length check
+
+When I set an overly long password (maxed out with 511 characters), the resulting addition of the 32 character username and the long password is 0x021f.
+
+When you look at that number as a whole, it is obviously larger than 0x21.
+
+But the comparison doesnt check the whole register! it checks one byte!
+And the last byte of our number is x1f (31 decimal), which is smaller than 0x21 and therefore passes the check!
+
+![cmp vuln](Images/Jakarta/3thirdvuln.png)
+
+breaking at the return at the end of the login() function then stepping once gives me the glorious overwrite of the PC register.
+
+![overflow](Images/Jakarata/overflow.png)
+
+After which its a simple redirect to the unlock_door() function like usual with the hsm-1 and that is a solve.
+
+![success](Images/Jakarta/success.png)
