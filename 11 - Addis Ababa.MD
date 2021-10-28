@@ -19,11 +19,11 @@ So I start off with a few %x's to check if some memory gets leaked in hex format
 
 Sure enough, some memory is leaked back to me in the output console.
  
- [leaked](Images/adab/leak.png)
+ ![leaked](Images/adab/leak.png)
 
  and converting this back to ascii shows it's just the %x's that I entered.
 
- [reflected](images/adab/reflected.png)
+ ![reflected](images/adab/reflected.png)
 
  Ok cool. So as a next step I want to confirm that I can write to memory with this vuln.
  To do that i'll generate a payload of a few letters followed by a few %x's to see if the %x's point to the previous letters.
