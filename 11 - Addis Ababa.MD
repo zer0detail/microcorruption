@@ -23,7 +23,7 @@ Sure enough, some memory is leaked back to me in the output console.
 
  and converting this back to ascii shows it's just the %x's that I entered.
 
- ![reflected](images/adab/reflected.png)
+ ![reflected](Images/adab/reflected.png)
 
  Ok cool. So as a next step I want to confirm that I can write to memory with this vuln.
  To do that i'll generate a payload of a few letters followed by a few %x's to see if the %x's point to the previous letters.
